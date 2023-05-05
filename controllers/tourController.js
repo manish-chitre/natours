@@ -189,22 +189,22 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
 //   });
 // };
 
-// exports.deleteTour = (req, res) => {
-//   try {
-//     const tour = Tour.deleteOne({ _id: ObjectId(req.params.id * 1) });
-//     res.status(200).status({
-//       status: 'success',
-//       data: {
-//         tour: tour,
-//       },
-//     });
-//   } catch (err) {
-//     res.status(403).status({
-//       status: 'fail',
-//       message: err,
-//     });
-//   }
-// };
+exports.deleteTour = catchAsync(async (req, res, next) => {
+  try {
+    const tour = await Tour.deleteOne({ _id: req.params.id * 1 });
+    res.status(200).status({
+      status: 'success',
+      data: {
+        tour: tour,
+      },
+    });
+  } catch (err) {
+    res.status(403).status({
+      status: 'fail',
+      message: err,
+    });
+  }
+});
 
 // exports.updateTour = (req, res) => {
 
