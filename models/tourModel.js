@@ -1,4 +1,5 @@
-const mongoose = require('mongoose'); //const User = require('./userModel');
+const mongoose = require('mongoose');
+//const User = require('./userModel');
 const tourSchema = mongoose.Schema(
   {
     name: {

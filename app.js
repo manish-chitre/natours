@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const globalErrorHandler = require('./controllers/errorController');
 
+const reviewRouter = require('./routes/reviewRoutes');
 const userRouter = require('./routes/userRoutes');
 const tourRouter = require('./routes/tourRoutes');
 
@@ -20,6 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 //This is mounting routers
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 app.use(globalErrorHandler);
 module.exports = app;
