@@ -1,5 +1,4 @@
-const Tour = require('../models/tourModel');
-const APIFeatures = require('../utils/apiFeatures');
+const Tour = require('../models/tourModel');const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
@@ -44,6 +43,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
+
   if (!tour) {
     return next(new AppError('No tour found with that ID', 404));
   }
@@ -190,20 +190,13 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
 // };
 
 exports.deleteTour = catchAsync(async (req, res, next) => {
-  try {
-    const tour = await Tour.deleteOne({ _id: req.params.id * 1 });
-    res.status(200).status({
-      status: 'success',
-      data: {
-        tour: tour,
-      },
-    });
-  } catch (err) {
-    res.status(403).status({
-      status: 'fail',
-      message: err,
-    });
-  }
+  const tour = await Tour.deleteOne({ _id: req.params.id });
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour: tour,
+    },
+  });
 });
 
 // exports.updateTour = (req, res) => {
