@@ -1,4 +1,7 @@
-const mongoose = require('mongoose'); //const User = require('./userModel');
+
+const mongoose = require('mongoose');
+//const User = require('./userModel');
+
 const tourSchema = mongoose.Schema(
   {
     name: {
@@ -93,6 +96,45 @@ const tourSchema = mongoose.Schema(
       },
     ],
     guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  },
+  {
+    secretTour: {
+      type: Boolean,
+      value: false,
+      default: false,
+    },
+  },
+  {
+    startLocation: {
+      type: {
+        type: 'Point',
+        default: 'Point',
+        enum: ['Point'],
+      },
+      coordinates: [
+        {
+          type: String,
+        },
+      ],
+      address: String,
+      description: String,
+    },
+  },
+  {
+    locations: [
+      {
+        type: {
+          type: 'Point',
+          coordinates: [
+            {
+              type: String,
+            },
+          ],
+          description: String,
+          day: String,
+        },
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
