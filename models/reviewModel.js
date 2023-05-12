@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');const reviewSchema = mongoose.Schema({
+const mongoose = require('mongoose');
+const reviewSchema = mongoose.Schema(
+  {
   review: {
     type: String,
     required: [true, 'review must be provided'],

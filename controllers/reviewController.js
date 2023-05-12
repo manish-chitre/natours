@@ -1,15 +1,11 @@
-const Review = require('../models/reviewModel');
-const catchAsync = require('../utils/catchAsync');
+const Review = require('../models/reviewModel');const catchAsync = require('../utils/catchAsync');
 
 exports.addReview = catchAsync(async (req, res, next) => {
-  const newReview = {
-    review: req.body.review,
-    rating: req.body.rating,
-    tour: req.body.tour,
-    user: req.body.user,
-  };
+  //Allow nested routes..
+  if (!req.body.tour) req.body.tour = req.params.tourId;
+  if (!req.body.user) req.body.user = req.user.id;
 
-  await Review.create(newReview);
+  const newReview = await Review.create(req.body);
 
   return res.status(200).json({
     status: 'success',
@@ -20,9 +16,16 @@ exports.addReview = catchAsync(async (req, res, next) => {
 });
 
 exports.getReviews = catchAsync(async (req, res, next) => {
-  const reviews = await Review.find();
+  let reviews = null;
+  if (!req.params.tourId) {
+    reviews = await Review.find({ tour: req.params.tourId });
+  } else {
+    reviews = await Review.find();
+  }
+
   return res.status(200).json({
     status: 'success',
+    results: reviews.length,
     data: {
       reviews,
     },
