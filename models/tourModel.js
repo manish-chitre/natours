@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-//const User = require('./userModel');
+const mongoose = require('mongoose'); //const User = require('./userModel');
 const tourSchema = mongoose.Schema(
   {
     name: {
@@ -116,6 +115,13 @@ tourSchema.pre(/^find/, function (next) {
 
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
+});
+
+//virtual populate
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id',
 });
 
 const Tour = mongoose.model('Tour', tourSchema);
