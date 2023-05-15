@@ -1,4 +1,6 @@
-const Review = require('../models/reviewModel');const catchAsync = require('../utils/catchAsync');
+const Review = require('../models/reviewModel');
+const catchAsync = require('../utils/catchAsync');
+const factory = require('./handlerFactory');
 
 exports.addReview = catchAsync(async (req, res, next) => {
   //Allow nested routes..
@@ -41,3 +43,5 @@ exports.getReview = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.deleteReview = factory.deleteOne(Review);
