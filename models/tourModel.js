@@ -1,8 +1,4 @@
-
-const mongoose = require('mongoose');
-//const User = require('./userModel');
-
-const tourSchema = mongoose.Schema(
+const mongoose = require('mongoose');const tourSchema = mongoose.Schema(
   {
     name: {
       type: String,
@@ -142,6 +138,9 @@ const tourSchema = mongoose.Schema(
   }
 );
 
+//tourSchema.index({ price: 1 }); //1 ascending, //decending.
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
 //guides embedded
 // tourSchema.pre('save', async function (next) {
 //   const guidesPromises = this.guides.map(async (id) => await User.findById(id));
@@ -151,7 +150,7 @@ const tourSchema = mongoose.Schema(
 
 //guides child refrenced.
 tourSchema.pre(/^find/, function (next) {
-  this.populate({ path: 'guides', select: '-__v' });
+  this.populate([{ path: 'guides' }, { path: 'reviews' }]);
   next();
 });
 
